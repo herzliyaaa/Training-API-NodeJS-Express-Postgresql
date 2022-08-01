@@ -19,7 +19,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(logger("dev"));
 
 app.get("/", (req, res) => {
-  res.json({ message: "Meow!" });
+  res.json({ message: "kssksksksk!" });
 });
 
 // Set port, listen for requests
