@@ -8,13 +8,13 @@ const getItems = (req, res) => {
 };
 
 const getItemById = (req, res) => {
-  const barcode = req.params.barcode;
+  const barcode = req.params.id;
   pool.query(
     "SELECT * FROM items WHERE barcode = $1",
     [barcode],
     (error, results) => {
       if (error) throw error;
-      res.status(200).json(results.rows);
+      res.status(201).json(results.rows);
     }
   );
 };
@@ -44,10 +44,22 @@ const editItem = (req, res) => {
   );
 };
 
+const deleteItem = (req, res) => {
+  const barcode = req.params.id;
+  pool.query(
+    "DELETE FROM items WHERE barcode = $1",
+    [barcode],
+    (error, results) => {
+      if (error) throw error;
+      res.status(200).json("Item Deleted Successfully!");
+    }
+  );
+};
 
 module.exports = {
   getItems,
   getItemById,
   addItem,
-  editItem
+  editItem,
+  deleteItem
 };

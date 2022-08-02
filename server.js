@@ -23,7 +23,7 @@ app.get("/", (req, res) => {
 
 
 app.use(itemRoutes);
-// app.use(customerRoutes);
+app.use(customerRoutes);
 // app.use(supplierRoutes);
 
 
