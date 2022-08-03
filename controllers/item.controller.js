@@ -1,7 +1,7 @@
 const pool = require("../config/db.config");
 
 const getItems = (req, res) => {
-  pool.query("SELECT * FROM items", (error, results) => {
+  pool.query("SELECT * FROM items ORDER BY created_at", (error, results) => {
     if (error) throw error;
     res.status(200).json(results.rows);
   });
@@ -22,7 +22,7 @@ const getItemById = (req, res) => {
 const addItem = (req, res) => {
   const { barcode, name, quantity, cost } = req.body;
   pool.query(
-    "INSERT INTO items (barcode, name, quantity, cost) VALUES ($1, $2, $3, $4)",
+    "INSERT INTO items (barcode, name, quantity, cost, created_at) VALUES ($1, $2, $3, $4 , localtimestamp)",
     [barcode, name, quantity, cost],
     (error, results) => {
       if (error) throw error;
@@ -56,10 +56,18 @@ const deleteItem = (req, res) => {
   );
 };
 
+const deleteAllItems = (req, res) => {
+  pool.query("TRUNCATE TABLE items", (error, results) => {
+    if (error) throw error;
+    res.status(200).json('All items were deleted!');
+  });
+};
+
 module.exports = {
   getItems,
   getItemById,
   addItem,
   editItem,
-  deleteItem
+  deleteItem,
+  deleteAllItems
 };
