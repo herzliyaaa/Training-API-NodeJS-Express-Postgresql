@@ -24,8 +24,14 @@ app.get("/", (req, res) => {
 
 app.use(itemRoutes);
 app.use(customerRoutes);
-// app.use(supplierRoutes);
+app.use(supplierRoutes);
 
+app.use (function(err, req, res, next) {
+  if (err) {
+    console.log(err)
+    res.sendStatus(400)
+  }
+})
 
 
 

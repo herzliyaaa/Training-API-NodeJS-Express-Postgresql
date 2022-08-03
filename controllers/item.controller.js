@@ -32,7 +32,7 @@ const addItem = (req, res) => {
 };
 
 const editItem = (req, res) => {
-  const barcode = req.params.barcode;
+  const barcode = req.params.id;
   const { name, quantity, cost } = req.body;
   pool.query(
     "UPDATE items SET name = $1, quantity = $2, cost = $3 WHERE barcode = $4",
