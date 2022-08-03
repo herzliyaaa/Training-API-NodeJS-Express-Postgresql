@@ -14,7 +14,7 @@ const getSupplierById = (req, res) => {
     [id],
     (error, results) => {
       if (error) throw error;
-      res.status(201).json(results.rows);
+      res.status(200).json(results.rows);
     }
   );
 };
