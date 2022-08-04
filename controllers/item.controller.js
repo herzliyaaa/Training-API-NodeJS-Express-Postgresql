@@ -2,7 +2,9 @@ const pool = require("../config/db.config");
 
 const getItems = (req, res) => {
   pool.query("SELECT * FROM items ORDER BY created_at", (error, results) => {
-    if (error) throw error;
+    if (error) {
+      res.json("Error!")
+    };
     res.status(200).json(results.rows);
   });
 };
@@ -57,15 +59,24 @@ const deleteItem = (req, res) => {
 };
 
 const deleteAllItems = (req, res) => {
-  pool.query("TRUNCATE TABLE items", (error, results) => {
+  pool.query("TRUNCATE TABLE items CASCADE", (error, results) => {
     if (error) throw error;
     res.status(200).json('All items were deleted!');
   });
 };
 
+const getTotalItems = (req, res) => {
+  pool.query("SELECT COUNT(barcode) FROM items", (error, results) => {
+    if (error) throw error;
+    res.status(200).json(results.rows);
+  });
+};
+
+
 module.exports = {
   getItems,
   getItemById,
+  getTotalItems,
   addItem,
   editItem,
   deleteItem,

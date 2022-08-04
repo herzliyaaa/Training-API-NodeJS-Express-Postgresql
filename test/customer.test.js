@@ -8,14 +8,14 @@ const should = chai.should();
 chai.use(chaiHttp);
 
 // parent block
-describe("Items API", () => {
+describe("Customers API", () => {
 
   // assertion for GET
-  describe("Test GET route /items", () => {
-    it("It should return all items", (done) => {
+  describe("Test GET route /customers", () => {
+    it("It should return all customers", (done) => {
       chai
         .request(API)
-        .get("/items")
+        .get("/customers")
         .end((err, res) => {
           res.should.have.status(200);
           res.body.should.be.a("array");
@@ -27,38 +27,40 @@ describe("Items API", () => {
 
   //another assertion for get/:id
   describe("Test GET/:id route", () => {
-    it("it should get an item by the given id", (done) => {
-      const barcode = "7342433";
+    it("it should get an customer by the given id", (done) => {
+      const customer_id = "4";
       chai
         .request(API)
-        .get(`/items/view/${barcode}`)
+        .get(`/customers/view/${customer_id}`)
         .end((err, res) => {
           res.should.have.status(200);
-          // res.body.should.be.a("object");
-          // res.body.should.have.property("name");
-          // res.body.should.have.property("quantity");
-          // res.body.should.have.property("cost");
-          // res.body.should.have.property("id");
-          // res.body.should.have.property("barcode");
+        //   res.body.should.be.a("object");
+        //   res.body.should.have.property("customer_id").equal(1);
+        //   res.body.should.have.property("firstname");
+        //   res.body.should.have.property("middlename");
+        //   res.body.should.have.property("lastname");
+        //   res.body.should.have.property("address");
+        //   res.body.should.have.property("contact");
           done();
         });
     });
   });
 
   describe("Test POST route", () => {
-    it("it should post an item", (done) => {
+    it("it should post customer", (done) => {
       
-      const item = {
-        barcode: Math.floor(Math.random() * 10000) + 99999,
-        name: "mang juan",
-        quantity: Math.floor(Math.random() * 50) + 1,
-        cost: Math.floor(Math.random() * 50) + 300,
+      const newCustomer = {
+        firstname: `herzlia ${Math.random().toString(36).slice(2)}`,
+        middlename: "mang juan",
+        lastname: "mang juan",
+        address: Math.random().toString(36).slice(2),
+        contact: Math.floor(Math.random() * 093424243) + 300,
       };
 
       chai
         .request(API)
-        .post("/items/add")
-        .send(item)
+        .post("/customers/add")
+        .send(newCustomer)
         .end((err, res) => {
           res.should.have.status(200);
           // res.body.should.be.a("object");

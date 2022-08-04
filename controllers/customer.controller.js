@@ -10,7 +10,7 @@ const getCustomers = (req, res) => {
 const getCustomerById = (req, res) => {
   const id = req.params.id;
   pool.query(
-    "SELECT * FROM customers WHERE id = $1",
+    "SELECT * FROM customers WHERE customer_id = $1",
     [id],
     (error, results) => {
       if (error) throw error;
@@ -20,7 +20,7 @@ const getCustomerById = (req, res) => {
 };
 
 const addCustomer = (req, res) => {
-  const { firstname, middlename, lastname, address, contact} = req.body;
+  const { firstname, middlename, lastname, address, contact } = req.body;
   pool.query(
     "INSERT INTO customers (firstname, middlename, lastname, address, contact) VALUES ($1, $2, $3, $4, $5)",
     [firstname, middlename, lastname, address, contact],
@@ -32,10 +32,10 @@ const addCustomer = (req, res) => {
 };
 
 const editCustomer = (req, res) => {
-  const id  = req.params.id;
+  const id = req.params.id;
   const { firstname, middlename, lastname, address, contact } = req.body;
   pool.query(
-    "UPDATE customers SET firstname = $1, middlename = $2, lastname = $3, address = $4, contact = $5 WHERE id = $6",
+    "UPDATE customers SET firstname = $1, middlename = $2, lastname = $3, address = $4, contact = $5 WHERE customer_id = $6",
     [firstname, middlename, lastname, address, contact, id],
     (error, results) => {
       if (error) throw error;
@@ -47,7 +47,7 @@ const editCustomer = (req, res) => {
 const deleteCustomer = (req, res) => {
   const id = req.params.id;
   pool.query(
-    "DELETE FROM customers WHERE id = $1",
+    "DELETE FROM customers WHERE customer_id = $1",
     [id],
     (error, results) => {
       if (error) throw error;
@@ -56,10 +56,18 @@ const deleteCustomer = (req, res) => {
   );
 };
 
+const getTotalCustomers = (req, res) => {
+  pool.query("SELECT COUNT(customer_id) FROM customers", (error, results) => {
+    if (error) throw error;
+    res.status(200).json(results.rows);
+  });
+};
+
 module.exports = {
   getCustomers,
   getCustomerById,
   addCustomer,
   editCustomer,
-  deleteCustomer
+  deleteCustomer,
+  getTotalCustomers,
 };

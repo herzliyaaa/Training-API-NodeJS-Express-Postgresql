@@ -10,7 +10,7 @@ const getSuppliers = (req, res) => {
 const getSupplierById = (req, res) => {
   const id = req.params.id;
   pool.query(
-    "SELECT * FROM suppliers WHERE id = $1",
+    "SELECT * FROM suppliers WHERE supplier_id = $1",
     [id],
     (error, results) => {
       if (error) throw error;
@@ -35,7 +35,7 @@ const editSupplier = (req, res) => {
   const id = req.params.id;
   const { name, address, contact  } = req.body;
   pool.query(
-    "UPDATE suppliers SET name = $1, address = $2, contact = $3 WHERE id = $4",
+    "UPDATE suppliers SET name = $1, address = $2, contact = $3 WHERE supplier_id = $4",
     [name, address, contact , id],
     (error, results) => {
       if (error) throw error;
@@ -47,7 +47,7 @@ const editSupplier = (req, res) => {
 const deleteSupplier = (req, res) => {
   const id = req.params.id;
   pool.query(
-    "DELETE FROM suppliers WHERE id = $1",
+    "DELETE FROM suppliers WHERE supplier_id = $1",
     [id],
     (error, results) => {
       if (error) throw error;
