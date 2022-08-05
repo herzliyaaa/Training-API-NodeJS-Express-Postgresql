@@ -1,4 +1,4 @@
 TODO: 
 
-[] 1.Fixed chai assertions (GET/:id, POST, PUT, DELETE)
-[] 2. Dashboard data 
+[/] 1.Fixed chai assertions (GET/:id, POST, PUT, DELETE)
+[] 2.Dashboard data 

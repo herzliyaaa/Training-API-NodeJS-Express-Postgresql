@@ -9,7 +9,6 @@ chai.use(chaiHttp);
 
 // parent block
 describe("Customers API", () => {
-
   // assertion for GET
   describe("Test GET route /customers", () => {
     it("It should return all customers", (done) => {
@@ -28,19 +27,12 @@ describe("Customers API", () => {
   //another assertion for get/:id
   describe("Test GET/:id route", () => {
     it("it should get an customer by the given id", (done) => {
-      const customer_id = "4";
+      const customer_id = "193";
       chai
         .request(API)
         .get(`/customers/view/${customer_id}`)
         .end((err, res) => {
           res.should.have.status(200);
-        //   res.body.should.be.a("object");
-        //   res.body.should.have.property("customer_id").equal(1);
-        //   res.body.should.have.property("firstname");
-        //   res.body.should.have.property("middlename");
-        //   res.body.should.have.property("lastname");
-        //   res.body.should.have.property("address");
-        //   res.body.should.have.property("contact");
           done();
         });
     });
@@ -48,13 +40,12 @@ describe("Customers API", () => {
 
   describe("Test POST route", () => {
     it("it should post customer", (done) => {
-      
       const newCustomer = {
         firstname: `herzlia ${Math.random().toString(36).slice(2)}`,
-        middlename: "mang juan",
-        lastname: "mang juan",
+        middlename: "ramos",
+        lastname: "barangan",
         address: Math.random().toString(36).slice(2),
-        contact: Math.floor(Math.random() * 093424243) + 300,
+        contact: `09${Math.floor(Math.random() * 0934246543) + 300}`,
       };
 
       chai
@@ -63,16 +54,66 @@ describe("Customers API", () => {
         .send(newCustomer)
         .end((err, res) => {
           res.should.have.status(200);
-          // res.body.should.be.a("object");
-          // res.body.should.have.property("Items Created Successfully");
-          // res.body.should.have.property("name");
-          // res.body.should.have.property("quantity");
-          // res.body.should.have.property("cost");
-          // res.body.should.have.property("barcode");
+          res.body.should.have
+            .property("message")
+            .to.equal("Customer Created Successfully!");
+          res.body.should.have
+            .property("data")
+            .which.is.an("object")
+            .and.has.property("lastname")
+            .to.deep.equal("barangan");
           done();
         });
     });
   });
 
-  
+//hhehhe
+  describe("Test PUT route", () => {
+    it("it should update an item", (done) => {
+      const customer_id = "218";
+      const updateCustomer = {
+        firstname: "herzlia",
+        middlename: "valdez",
+        lastname: "cruz",
+        address: "perez",
+        contact: `09${Math.floor(Math.random() * 0934246543) + 300}`,
+      };
+
+      chai
+        .request(API)
+        .put(`/customers/edit/${customer_id}`)
+        .send(updateCustomer)
+        .end((err, res) => {
+          res.should.have.status(200);
+          res.body.should.have
+            .property("message")
+            .to.equal("Customer Updated Successfully!");
+          // res.body.should.have
+          //   .property("data")
+          //   .which.is.an("object")
+          //   .and.has.property("name")
+          //   .to.equal("cracklings");
+          done();
+        });
+    });
+  });
+
+  describe("Test DELETE/:id route", () => {
+    it("it should delete an item by the given id", (done) => {
+      const barcode = "101469";
+      chai
+        .request(API)
+        .delete(`/items/delete/${barcode}`)
+        .end((err, res) => {
+          res.should.have.status(200);
+          done();
+        });
+    });
+  });
+
+
+
+
+
+
 });

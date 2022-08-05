@@ -26,7 +26,7 @@ const addSupplier = (req, res) => {
     [name, address, contact ],
     (error, results) => {
       if (error) throw error;
-      res.status(200).json("Suppliers Created Successfully!");
+      res.status(200).json( { message: "Supplier Created Successfully!", data: req.body});
     }
   );
 };
@@ -39,7 +39,7 @@ const editSupplier = (req, res) => {
     [name, address, contact , id],
     (error, results) => {
       if (error) throw error;
-      res.status(200).json("Suppliers Updated Successfully!");
+      res.status(200).json({ message: "Supplier Updated Successfully!"});
     }
   );
 };

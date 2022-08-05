@@ -3,14 +3,12 @@ var chaiHttp = require("chai-http");
 var server = require("../server");
 
 const API = `http://localhost:${process.env.PORT}`;
-
+const expect = chai.expect;
 const should = chai.should();
 chai.use(chaiHttp);
 
 // parent block
 describe("Items API", () => {
-
-  // assertion for GET
   describe("Test GET route /items", () => {
     it("It should return all items", (done) => {
       chai
@@ -25,21 +23,17 @@ describe("Items API", () => {
     });
   });
 
-  //another assertion for get/:id
   describe("Test GET/:id route", () => {
     it("it should get an item by the given id", (done) => {
-      const barcode = "7342433";
+      const barcode = "89998";
       chai
         .request(API)
         .get(`/items/view/${barcode}`)
         .end((err, res) => {
           res.should.have.status(200);
-          // res.body.should.be.a("object");
-          // res.body.should.have.property("name");
-          // res.body.should.have.property("quantity");
-          // res.body.should.have.property("cost");
-          // res.body.should.have.property("id");
-          // res.body.should.have.property("barcode");
+          res.body.should.have
+          .property("message")
+          .to.equal(`Items of ${barcode}`);
           done();
         });
     });
@@ -47,12 +41,11 @@ describe("Items API", () => {
 
   describe("Test POST route", () => {
     it("it should post an item", (done) => {
-      
       const item = {
-        barcode: Math.floor(Math.random() * 10000) + 99999,
-        name: "mang juan",
+        barcode: Math.floor(Math.random() * 156464) + 2,
+        name: "mangjuan",
         quantity: Math.floor(Math.random() * 50) + 1,
-        cost: Math.floor(Math.random() * 50) + 300,
+        cost: Math.floor(Math.random() * 30) + 20,
       };
 
       chai
@@ -61,63 +54,59 @@ describe("Items API", () => {
         .send(item)
         .end((err, res) => {
           res.should.have.status(200);
-          // res.body.should.be.a("object");
-          // res.body.should.have.property("Items Created Successfully");
-          // res.body.should.have.property("name");
-          // res.body.should.have.property("quantity");
-          // res.body.should.have.property("cost");
-          // res.body.should.have.property("barcode");
+          res.body.should.have
+            .property("message")
+            .to.equal("Items Created Successfully!");
+          res.body.should.have
+            .property("data")
+            .which.is.an("object")
+            .and.has.property("name")
+            .to.deep.equal("mangjuan");
           done();
         });
     });
   });
 
-//PUT METHOD
   describe("Test PUT route", () => {
     it("it should update an item", (done) => {
-      const barcode = "7342433";
+      const barcode = "147141";
       const item = {
-        barcode: Math.floor(Math.random() * 10000) + 99999,
-        name: "mang juan",
-        quantity: Math.floor(Math.random() * 50) + 1,
-        cost: Math.floor(Math.random() * 50) + 300,
+        name: "cracklings",
+        quantity: Math.floor(Math.random() * 80) + 1,
+        cost: Math.floor(Math.random() * 10) + 3,
       };
 
       chai
         .request(API)
-        .put("/items/edit" + barcode)
+        .put(`/items/edit/${barcode}`)
         .send(item)
         .end((err, res) => {
           res.should.have.status(200);
-          // res.body.should.be.a("object");
-          // res.body.should.have.property("Items Created Successfully");
-          // res.body.should.have.property("name");
-          // res.body.should.have.property("quantity");
-          // res.body.should.have.property("cost");
-          // res.body.should.have.property("barcode");
+          res.body.should.have
+            .property("message")
+            .to.equal("Item Updated Successfully!");
+          res.body.should.have
+            .property("data")
+            .which.is.an("object")
+            .and.has.property("name")
+            .to.equal("cracklings");
           done();
         });
     });
   });
 
-  //another assertion for DELETE/:id
   describe("Test DELETE/:id route", () => {
     it("it should delete an item by the given id", (done) => {
-      const barcode = "7342433";
+      const barcode = "101469";
       chai
         .request(API)
-        .get(`/items/delete/${barcode}`)
+        .delete(`/items/delete/${barcode}`)
         .end((err, res) => {
           res.should.have.status(200);
-          // res.body.should.be.a("object");
-          // res.body.should.have.property("name");
-          // res.body.should.have.property("quantity");
-          // res.body.should.have.property("cost");
-          // res.body.should.have.property("id");
-          // res.body.should.have.property("barcode");
           done();
         });
     });
   });
+
   
 });
