@@ -9,7 +9,7 @@ chai.use(chaiHttp);
 
 // parent block
 describe("Customers API", () => {
-  // assertion for GET
+  
   describe("Test GET route /customers", () => {
     it("It should return all customers", (done) => {
       chai
@@ -24,7 +24,7 @@ describe("Customers API", () => {
     });
   });
 
-  //another assertion for get/:id
+
   describe("Test GET/:id route", () => {
     it("it should get an customer by the given id", (done) => {
       const customer_id = "193";
@@ -67,7 +67,6 @@ describe("Customers API", () => {
     });
   });
 
-//hhehhe
   describe("Test PUT route", () => {
     it("it should update an item", (done) => {
       const customer_id = "218";
@@ -88,11 +87,7 @@ describe("Customers API", () => {
           res.body.should.have
             .property("message")
             .to.equal("Customer Updated Successfully!");
-          // res.body.should.have
-          //   .property("data")
-          //   .which.is.an("object")
-          //   .and.has.property("name")
-          //   .to.equal("cracklings");
+
           done();
         });
     });
@@ -110,10 +105,4 @@ describe("Customers API", () => {
         });
     });
   });
-
-
-
-
-
-
 });

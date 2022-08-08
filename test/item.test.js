@@ -41,7 +41,7 @@ describe("Items API", () => {
 
   describe("Test POST route", () => {
     it("it should post an item", (done) => {
-      const item = {
+      const newItem = {
         barcode: Math.floor(Math.random() * 156464) + 2,
         name: "mangjuan",
         quantity: Math.floor(Math.random() * 50) + 1,
@@ -51,7 +51,7 @@ describe("Items API", () => {
       chai
         .request(API)
         .post("/items/add")
-        .send(item)
+        .send(newItem)
         .end((err, res) => {
           res.should.have.status(200);
           res.body.should.have
@@ -70,7 +70,7 @@ describe("Items API", () => {
   describe("Test PUT route", () => {
     it("it should update an item", (done) => {
       const barcode = "147141";
-      const item = {
+      const updateItem = {
         name: "cracklings",
         quantity: Math.floor(Math.random() * 80) + 1,
         cost: Math.floor(Math.random() * 10) + 3,
@@ -79,7 +79,7 @@ describe("Items API", () => {
       chai
         .request(API)
         .put(`/items/edit/${barcode}`)
-        .send(item)
+        .send(updateItem)
         .end((err, res) => {
           res.should.have.status(200);
           res.body.should.have

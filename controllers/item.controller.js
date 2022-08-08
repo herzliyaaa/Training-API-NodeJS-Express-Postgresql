@@ -18,7 +18,7 @@ const getItemById = (req, res) => {
       if (error) {
         res.status(400).json(error.message);
       }
-        res.status(200).json({ message: `Items of ${barcode}`, data: results.rows});
+        res.status(200).json({ message: `Item ${barcode}`, data: results.rows});
     }
   );
 };

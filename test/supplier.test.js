@@ -9,7 +9,6 @@ chai.use(chaiHttp);
 
 // parent block
 describe("Suppliers API", () => {
-  // assertion for GET
   describe("Test GET route /suppliers", () => {
     it("It should return all suppliers", (done) => {
       chai
@@ -24,7 +23,6 @@ describe("Suppliers API", () => {
     });
   });
 
-  //another assertion for get/:id
   describe("Test GET/:id route", () => {
     it("it should get an supplier by the given id", (done) => {
       const supplier_id = "193";
@@ -65,43 +63,39 @@ describe("Suppliers API", () => {
     });
   });
 
-//sdjahdsdadhhoiewhroiao
-describe("Test PUT route", () => {
-  it("it should update a suppler", (done) => {
-    const supplier_id = "218";
-    const updateSupplier = {
-      name: "Biotech",
-      address: "Tantangan",
-      contact: `09${Math.floor(Math.random() * 0934246543) + 300}`,
-    };
+  describe("Test PUT route", () => {
+    it("it should update a suppler", (done) => {
+      const supplier_id = "218";
+      const updateSupplier = {
+        name: "Biotech",
+        address: "Tantangan",
+        contact: `09${Math.floor(Math.random() * 0934246543) + 300}`,
+      };
 
-    chai
-      .request(API)
-      .put(`/suppliers/edit/${supplier_id}`)
-      .send(updateSupplier)
-      .end((err, res) => {
-        res.should.have.status(200);
-        res.body.should.have
-          .property("message")
-          .to.equal("Supplier Updated Successfully!");
-        done();
-      });
+      chai
+        .request(API)
+        .put(`/suppliers/edit/${supplier_id}`)
+        .send(updateSupplier)
+        .end((err, res) => {
+          res.should.have.status(200);
+          res.body.should.have
+            .property("message")
+            .to.equal("Supplier Updated Successfully!");
+          done();
+        });
+    });
   });
-});
 
-describe("Test DELETE/:id route", () => {
-  it("it should delete an supplier by the given id", (done) => {
-    const supplier_id = "101469";
-    chai
-      .request(API)
-      .delete(`/suppliers/delete/${supplier_id}`)
-      .end((err, res) => {
-        res.should.have.status(200);
-        done();
-      });
+  describe("Test DELETE/:id route", () => {
+    it("it should delete an supplier by the given id", (done) => {
+      const supplier_id = "101469";
+      chai
+        .request(API)
+        .delete(`/suppliers/delete/${supplier_id}`)
+        .end((err, res) => {
+          res.should.have.status(200);
+          done();
+        });
+    });
   });
-});
-
-
-
 });
